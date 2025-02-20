@@ -5,7 +5,7 @@ import "../../styling/common/App.css";
 
 function App() {
   return (
-    <div>
+    <div id="app">
       <NavigationBar />
       <h1>Oswall App</h1>
     </div>

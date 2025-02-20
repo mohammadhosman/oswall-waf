@@ -7,9 +7,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: black;
   color: skyblue;
-  margin: 30px;
   display: flex;
+  /*margin: 30px;
   padding: 1rem;
+  */
 }
 
 code {
