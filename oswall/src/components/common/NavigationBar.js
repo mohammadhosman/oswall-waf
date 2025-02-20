@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from 'react-dom/client';
 import "../../styling/common/NavigationBar.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import NavBar from "react-bootstrap/NavBar";
 
 function NavigationBar() {
     return (
-        <div id="navigation-bar" className="top-nav">
-            <a className="active" href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-        </div>
+        <NavBar bg="dark">
+
+        </NavBar>
     )
 }
 
