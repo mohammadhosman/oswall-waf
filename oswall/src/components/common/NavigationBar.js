@@ -1,4 +1,6 @@
 import React from "react";
+import ReactDOM from 'react-dom/client';
+import "../../styling/common/NavigationBar.css";
 
 function NavigationBar() {
     return (

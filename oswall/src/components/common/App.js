@@ -1,5 +1,7 @@
 import React from "react";
+import ReactDOM from 'react-dom/client';
 import NavigationBar from "./NavigationBar";
+import "../../styling/common/App.css";
 
 function App() {
   return (
