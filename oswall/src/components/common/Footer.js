@@ -1,10 +1,21 @@
 import React from "react";
 import "../../styling/common/Footer.css";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Stack from "react-bootstrap/Stack";
+import Image from "react-bootstrap/Image";
+import Nav from "react-bootstrap/Nav";
+import NavLink from "react-bootstrap/NavLink";
 
 function Footer() {
     return (
         <footer id="footer">
-            <h2>Copyright OsWall 2025</h2>
+            <Container fluid>
+                <Row className="bg-dark text-white">
+                    Footer Copyright OsWall 2025
+                </Row>
+            </Container>
         </footer>
     );
 }
