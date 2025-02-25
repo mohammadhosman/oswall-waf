@@ -13,8 +13,18 @@ function Footer() {
         <footer id="footer">
             <Container fluid>
                 <Row className="bg-dark text-white">
-                    <Col>
-                        Column 1
+                    <Col className="mx-5">
+                        <Stack>
+                            <Image 
+                                src={require("../../images/common/oswall-logo-large-no-bg.png")} 
+                                alt="oswall logo" 
+                                rounded
+                                width="50px" 
+                                height="50px"
+                            />
+                            <h2>OsWall Web App Security</h2>
+                            <p>Company Tagline Here</p>
+                        </Stack>
                     </Col>
                     <Col>
                         Column 2
