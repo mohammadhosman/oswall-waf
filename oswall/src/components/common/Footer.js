@@ -13,7 +13,15 @@ function Footer() {
         <footer id="footer">
             <Container fluid>
                 <Row className="bg-dark text-white">
-                    Footer Copyright OsWall 2025
+                    <Col>
+                        Column 1
+                    </Col>
+                    <Col>
+                        Column 2
+                    </Col>
+                    <Col>
+                        Column 3
+                    </Col>
                 </Row>
             </Container>
         </footer>
