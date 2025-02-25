@@ -27,7 +27,9 @@ function Footer() {
                         </Stack>
                     </Col>
                     <Col>
-                        Column 2
+                        <Nav className="flex-column fs-5">
+                            Useful Links
+                        </Nav>
                     </Col>
                     <Col>
                         Column 3
