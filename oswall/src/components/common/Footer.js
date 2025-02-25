@@ -29,6 +29,9 @@ function Footer() {
                     <Col>
                         <Nav className="flex-column fs-5">
                             Useful Links
+                            <NavLink></NavLink>
+                            <NavLink></NavLink>
+                            <NavLink></NavLink>
                         </Nav>
                     </Col>
                     <Col>
