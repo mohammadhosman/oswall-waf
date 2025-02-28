@@ -35,7 +35,8 @@ function Footer() {
                         </Nav>
                     </Col>
                     <Col>
-                        Column 3
+                        <h4>Contact Us!</h4>
+                        <p>Email Here</p>
                     </Col>
                 </Row>
             </Container>
