@@ -37,6 +37,7 @@ function Footer() {
                     <Col>
                         <h4>Contact Us!</h4>
                         <p>Email Here</p>
+                        <p>Phone Number Here</p>
                     </Col>
                 </Row>
             </Container>
