@@ -5,4 +5,5 @@
 .second-column-link:hover{
     color: lightblue;
     text-decoration: underline;
+    transition: 1s;
 }

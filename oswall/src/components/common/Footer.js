@@ -35,8 +35,8 @@ function Footer() {
                     </Col>
                     <Col>
                         <h4>Contact Us!</h4>
-                        <p>Email Here</p>
-                        <p>Phone Number Here</p>
+                        <p>info@oswall.security</p>
+                        <p>+1(604)-555-5555</p>
                     </Col>
                 </Row>
             </Container>
