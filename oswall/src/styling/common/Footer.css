@@ -1,4 +1,8 @@
+.second-column-link{
+    color: white;
+}
+
 .second-column-link:hover{
-    color: red;
+    color: lightblue;
     text-decoration: underline;
 }
