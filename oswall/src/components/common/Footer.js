@@ -19,19 +19,18 @@ function Footer() {
                                 src={require("../../images/common/oswall-logo-large-no-bg.png")} 
                                 alt="oswall logo" 
                                 rounded
-                                width="50px" 
-                                height="50px"
+                                width="100px" 
+                                height="100px"
                             />
-                            <h2>OsWall Web App Security</h2>
-                            <p>Company Tagline Here</p>
+                            <h3>OsWall Security</h3>
                         </Stack>
                     </Col>
                     <Col>
                         <Nav className="flex-column fs-5">
                             Useful Links
-                            <NavLink href="#" className="text-white">Home</NavLink>
-                            <NavLink href="#" className="text-white">About</NavLink>
-                            <NavLink href="#" className="text-white">Contact</NavLink>
+                            <NavLink href="#" target="_blank" className="text-white second-column-link">Home</NavLink>
+                            <NavLink href="#" target="_blank" className="text-white second-column-link">About</NavLink>
+                            <NavLink href="#" target="_blank" className="text-white second-column-link">Contact</NavLink>
                         </Nav>
                     </Col>
                     <Col>
