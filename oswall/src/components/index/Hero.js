@@ -3,7 +3,7 @@ import "../../styling/index/Hero.css";
 
 function Hero() {
     return (
-        <header>
+        <header id="hero">
 
         </header>
     )
