@@ -1,3 +1,5 @@
+/*CSS for the Navigation bar at the top of every page*/
+
 #nav-bar{
     display: flex;
     justify-content: space-between;
