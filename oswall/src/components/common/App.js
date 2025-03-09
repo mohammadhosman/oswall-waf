@@ -9,7 +9,6 @@ function App() {
   return (
     <div id="app">
       <NavigationBar />
-      <h1>Oswall App</h1>
       <Hero />
       <Footer />
     </div>

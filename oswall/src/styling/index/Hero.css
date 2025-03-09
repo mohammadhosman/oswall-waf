@@ -2,10 +2,14 @@
     color: lightblue;
     background-color: green;
     padding-left: 0;
+    width: 100%;
 }
 
 #hero-image{
     background-image: url("../../images/index/hero.jpg");
     height: 700px;
-    max-height: 100%;
+    
+    width: 99%;
+    object-fit: cover;
+    
 }
