@@ -5,11 +5,12 @@ import "../../styling/common/NavigationBar.css";
 import NavBar from "react-bootstrap/NavBar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
+import {Link} from "react-router-dom";
 
 function NavigationBar() {
     return (
         <NavBar expand="lg" bg="dark" data-bs-theme="dark" id="nav-bar">
-            <NavBar.Brand href="#home" id="nav-bar-brand">
+            <NavBar.Brand as={Link} to="/" id="nav-bar-brand">
                 <img alt="oswall logo" 
                 src={require("../../images/common/oswall-logo-large-no-bg.png")} 
                 width="50px" 
@@ -18,9 +19,9 @@ function NavigationBar() {
                 />
             </NavBar.Brand>
             <Nav id="nav-bar-links" className="me-auto">
-                <Nav.Link href="#home">Home</Nav.Link>
-                <Nav.Link href="#about">About</Nav.Link>
-                <Nav.Link href="#contact">Contact</Nav.Link>
+                <Nav.Link as={Link} to="/">Home</Nav.Link>
+                <Nav.Link as={Link} to="/about">About</Nav.Link>
+                <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
             </Nav>
             <Nav id="nav-bar-login-and-signup">
                 <Button variant="outline-info" id="nav-bar-login-button">Login</Button>
