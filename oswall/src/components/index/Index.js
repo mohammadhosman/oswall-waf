@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from 'react-dom/client';
-import NavigationBar from "./NavigationBar";
+import NavigationBar from "../common/NavigationBar.js";
 import Hero from "../common/Hero.js";
-import Footer from "./Footer.js";
+import Footer from "../common/Footer.js";
 import "../../styling/common/App.css";
 import heroImage from "../../images/index/hero.jpg";
 
-function App() {
+function Index() {
   return (
     <div id="app">
       <NavigationBar />
@@ -22,4 +22,4 @@ function App() {
   );
 }
 
-export default App;
+export default Index;

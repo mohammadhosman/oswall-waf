@@ -6,7 +6,7 @@ import Footer from "../common/Footer";
 import "../../styling/common/App.css";
 import heroImage from "../../images/about/hero.jpg";
 
-function App(){
+function About(){
     return (
         <div id="app">
             <NavigationBar />
@@ -24,4 +24,4 @@ function App(){
     );
 }
 
-export default App;
+export default About;
