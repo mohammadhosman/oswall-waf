@@ -4,6 +4,8 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Home from "./components/index/Index"; //Home page component
 import About from "./components/about/About"; //About page component
 import Contact from "./components/contact/Contact"; //Contact page component
+import Login from "./components/login/Login"; //Login page component
+import Register from "./components/register/Register"; //Register page component
 
 function App() {
     return (
@@ -12,6 +14,8 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
                 {/* This is where I will add more routes */}
             </Routes>
         </Router>

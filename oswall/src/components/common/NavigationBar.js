@@ -24,8 +24,18 @@ function NavigationBar() {
                 <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
             </Nav>
             <Nav id="nav-bar-login-and-signup">
-                <Button variant="outline-info" id="nav-bar-login-button">Login</Button>
-                <Button variant="info" id="nav-bar-signup-button">Sign Up</Button>
+                {/* Have to wrap <Button> element with a <Link> tag 
+                in order to send users to another page after clicking
+                on that button*/}
+                <Link to={"/login"}>
+                    <Button variant="outline-info" id="nav-bar-login-button">Login</Button>
+                </Link>
+
+                {/* This is the sign up button that will take users to the register page */}
+                <Link to={"/register"}>
+                    <Button variant="info" id="nav-bar-signup-button">Sign Up</Button>
+                </Link>
+
             </Nav>
         </NavBar>
     )
