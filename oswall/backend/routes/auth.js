@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
+const auth = require('../middleware/auth');
 
 //Registration route
 router.post('/register', async (req, res) => {
@@ -71,5 +72,15 @@ router.post('/login', async (req, res) => {
         res.status(500).json({message: '500 Server error'});
     }
 })
+
+router.get('/profile', auth, async (req, res) =>{
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        res.json(user);
+    } catch (error) {
+        console.error('Error fetching user profile. From routes/auth.js profile route: ', error);
+        res.status(500).json({message: 'Server error'});
+    }
+});
 
 module.exports = router;
