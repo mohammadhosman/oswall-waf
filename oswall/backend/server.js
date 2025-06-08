@@ -16,6 +16,14 @@ mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopolo
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
+// Protected sites routes
+const protectedSitesRoutes = require('./routes/protectedSites');
+app.use('/api/sites', protectedSitesRoutes);
+
+// Blocked IPs routes
+const blockedIPsRoutes = require('./routes/blockedIP');
+app.use('/api/blocked-ips', blockedIPsRoutes);
+
 const PORT = process.env.PORT || 5000;
 
 app.get('/', (req, res) => {
