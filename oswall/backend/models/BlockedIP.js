@@ -3,8 +3,8 @@ const ProtectedSite = require('./ProtectedSite'); // Importing ProtectedSite mod
 
 // BlockedIP model schema. This will be used to store info about blocked IPs
 const BlockedIPSchema = new mongoose.Schema({
-    protectedSite: {type: mongoose.Schema.Types.ObjectId, ref: ProtectedSite, required: true},
-    ipAddress: {type: String, required: true, unique: true},
+    protectedSite: {type: mongoose.Schema.Types.ObjectId, ref: 'ProtectedSite', required: true},
+    ip: {type: String, required: true, unique: true},
     createdAt: {type: Date, default: Date.now}
 })
 
