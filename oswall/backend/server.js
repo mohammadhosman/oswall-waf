@@ -24,6 +24,10 @@ app.use('/api/sites', protectedSitesRoutes);
 const blockedIPsRoutes = require('./routes/blockedIP');
 app.use('/api/blocked-ips', blockedIPsRoutes);
 
+// Proxy routes
+const proxyRoutes = require('./routes/proxy');
+app.use('/proxy', proxyRoutes);
+
 const PORT = process.env.PORT || 5000;
 
 app.get('/', (req, res) => {
