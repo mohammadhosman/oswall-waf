@@ -28,6 +28,10 @@ app.use('/api/blocked-ips', blockedIPsRoutes);
 const proxyRoutes = require('./routes/proxy');
 app.use('/proxy', proxyRoutes);
 
+// Contact form route
+const contactRoutes = require('./routes/contact');
+app.use('/api/contact', contactRoutes);
+
 const PORT = process.env.PORT || 5000;
 
 app.get('/', (req, res) => {
