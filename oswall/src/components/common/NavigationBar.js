@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import {Link} from "react-router-dom";
 
 function NavigationBar() {
+    const isLoggedIn = !!localStorage.getItem('token'); // Check if user is logged in by checking for a token in local storage
     return (
         <NavBar expand="lg" bg="dark" data-bs-theme="dark" id="nav-bar">
             <NavBar.Brand as={Link} to="/" id="nav-bar-brand">
