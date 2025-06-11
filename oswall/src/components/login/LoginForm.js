@@ -20,6 +20,7 @@ function LoginForm() {
     const response = await axios.post('http://localhost:5000/api/auth/login', formData);
     // Let user know that the login was successful
     console.log('Login successfully sent from LoginForm component', response.data);
+    localStorage.setItem('token', response.data.token);
     alert('Login successful!');
     } catch (error) {
       console.error('Error sending login data from LoginForm component', error);
