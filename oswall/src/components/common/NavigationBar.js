@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState } from "react";
 import ReactDOM from 'react-dom/client';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styling/common/NavigationBar.css";
@@ -7,8 +7,20 @@ import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
 import {Link} from "react-router-dom";
 
+
 function NavigationBar() {
-    const isLoggedIn = !!localStorage.getItem('token'); // Check if user is logged in by checking for a token in local storage
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token')); // Check if user is logged in by checking for a token in local storage
+
+    useEffect(() => {
+        const handleStorageChange = () => {
+            setIsLoggedIn(!!localStorage.getItem('token'));
+        };
+        window.addEventListener('storage', handleStorageChange);
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+        }
+    }, []);
+
     return (
         <NavBar expand="lg" bg="dark" data-bs-theme="dark" id="nav-bar">
             <NavBar.Brand as={Link} to="/" id="nav-bar-brand">
@@ -28,7 +40,9 @@ function NavigationBar() {
                 {/* Have to wrap <Button> element with a <Link> tag 
                 in order to send users to another page after clicking
                 on that button*/}
-                <Link to={"/login"}>
+                {!isLoggedIn && (
+                    <>
+                    <Link to={"/login"}>
                     <Button variant="outline-info" id="nav-bar-login-button">Login</Button>
                 </Link>
 
@@ -36,7 +50,21 @@ function NavigationBar() {
                 <Link to={"/register"}>
                     <Button variant="info" id="nav-bar-signup-button">Sign Up</Button>
                 </Link>
+                </>
+                )}
 
+                {isLoggedIn && (
+                    <>
+                    <Link to={"/dashboard"}>
+                    <Button variant="info" id="nav-bar-dashboard-button">Dashboard</Button>
+                </Link>
+
+                
+                <Link to={"/logout"}>
+                    <Button variant="outline-info" id="nav-bar-logout-button">Logout</Button>
+                </Link>
+                </>
+                )}
             </Nav>
         </NavBar>
     )

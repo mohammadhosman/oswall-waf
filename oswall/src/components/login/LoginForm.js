@@ -21,6 +21,7 @@ function LoginForm() {
     // Let user know that the login was successful
     console.log('Login successfully sent from LoginForm component', response.data);
     localStorage.setItem('token', response.data.token);
+    window.location.reload(); // Reload the page to reflect the login state
     alert('Login successful!');
     } catch (error) {
       console.error('Error sending login data from LoginForm component', error);
