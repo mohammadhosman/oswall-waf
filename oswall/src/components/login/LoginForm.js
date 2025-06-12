@@ -21,6 +21,7 @@ function LoginForm() {
     // Let user know that the login was successful
     console.log('Login successfully sent from LoginForm component', response.data);
     localStorage.setItem('token', response.data.token);
+    console.log('Token in localStorage:', localStorage.getItem('token'));
     window.location.reload(); // Reload the page to reflect the login state
     alert('Login successful!');
     } catch (error) {
@@ -36,10 +37,10 @@ function LoginForm() {
         {/* This is where a user will enter their username. For now,
         users will use their email as their username */}
       <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Enter your username/email</Form.Label>
+        <Form.Label>Login with your email</Form.Label>
         <Form.Control 
           type="email" 
-          placeholder="Enter username here..."
+          placeholder="Enter email here..."
           className='w-25' 
           value={email}
           onChange={e => setEmail(e.target.value)}

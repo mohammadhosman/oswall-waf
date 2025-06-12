@@ -7,6 +7,7 @@ import Contact from "./components/contact/Contact"; //Contact page component
 import Login from "./components/login/Login"; //Login page component
 import Register from "./components/register/Register"; //Register page component
 import Logout from "./components/logout/Logout"; //Logout page component
+import Dashboard from "./components/dashboard/Dashboard"; //Dashboard page component
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/logout" element={<Logout />} />
+                <Route path="/dashboard" element={<Dashboard />} />
                 {/* This is where I will add more routes */}
             </Routes>
         </Router>
