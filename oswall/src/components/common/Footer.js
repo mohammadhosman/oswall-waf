@@ -7,6 +7,7 @@ import Stack from "react-bootstrap/Stack";
 import Image from "react-bootstrap/Image";
 import Nav from "react-bootstrap/Nav";
 import NavLink from "react-bootstrap/NavLink";
+import { Link } from "react-router-dom";
 
 function Footer() {
     return (
@@ -28,9 +29,9 @@ function Footer() {
                     <Col>
                         <Nav className="flex-column fs-5">
                             Useful Links
-                            <NavLink href="#" target="_blank" className="second-column-link">Home</NavLink>
-                            <NavLink href="#" target="_blank" className="second-column-link">About</NavLink>
-                            <NavLink href="#" target="_blank" className="second-column-link">Contact</NavLink>
+                            <NavLink href="/" target="_blank" className="second-column-link">Home</NavLink>
+                            <NavLink href="/about" target="_blank" className="second-column-link">About</NavLink>
+                            <NavLink href="/contact" target="_blank" className="second-column-link">Contact</NavLink>
                         </Nav>
                     </Col>
                     <Col>
