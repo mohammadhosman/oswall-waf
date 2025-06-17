@@ -5,6 +5,8 @@ import Row from 'react-bootstrap/Row';
 import "../../styling/register/RegisterForm.css";
 import React, { useState } from 'react';
 import axios from 'axios';
+import Alert from 'react-bootstrap/Alert';
+import { useNavigate } from 'react-router-dom'; 
 
 function RegisterForm() {
   const [email, setEmail] = useState('');
@@ -14,9 +16,14 @@ function RegisterForm() {
   const [name, setName] = useState('');
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(''); // Reset error state
+    setSuccess(false); // Reset success state
     // Here is where I handle the form submission
     const formData = {
       email: email,
@@ -29,15 +36,26 @@ function RegisterForm() {
     // Send the form data to the backend API
     try {
       const response = await axios.post('http://localhost:5000/api/auth/register', formData);
+      if (response.status === 201) {
+        setSuccess('Registration successful. Redirecting...');
+            // localStorage.setItem('token', res.data.token);
+            setTimeout(() => {
+                navigate('/login'); 
+            }, 1500); // 1.5 second delay for user to see the message
+      }
       console.log('Registration successfully sent from RegisterForm component', response.data);
     } catch (error){
+      setError('Registration failed.');
       console.error('Error sending registration data from RegisterForm component', error);
-      // Handle the error appropriately, e.g., show a notification to the user
+      // Show registration error to the user
       alert('Registration failed. Please try again.');
     }
   }
 
     return (
+      <>
+      {success && <Alert variant="success">{success}</Alert>}
+      {error && <Alert variant="danger">{error}</Alert>}
         <Form id='register-form' className='mt-3' onSubmit={handleSubmit}>
       <Row className="mb-3">
 
@@ -134,7 +152,8 @@ function RegisterForm() {
         Sign me up
       </Button>
     </Form>
-    )
+    </>
+    );
 }
 
 export default RegisterForm;

@@ -3,17 +3,35 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const BlockedIP = require('../models/BlockedIP');
 const ProtectedSite = require('../models/ProtectedSite');
+const {sortIPs} = require('../utils/ipSort');
+const {paginate} = require('../utils/paginate');
 
 // Get all blocked IPs for a user's protected site
 router.get('/', auth, async (req, res) => {
     try {
-        const protectedSite = await ProtectedSite.findOne({ user: req.user.id});
+        const protectedSite = await ProtectedSite.findOne({ user: req.user.id}); //Find the protected site for the user
         if (!protectedSite) {
+            // If no protected site is found foe the user, return 404 error
             console.error('Protected site not found for user. Sent from routes/blockedIP.js get method');
             return res.status(404).json({ message: 'Protected site not found' });
         }
+        // Find all blocked IPs for the user's protected site
         const blockedIPs = await BlockedIP.find({protectedSite: protectedSite._id});
-        res.json(blockedIPs);
+        // sort the blocked IPs numerically using a util helper function
+        const sortedIPs = sortIPs(blockedIPs); 
+        //Get requested page number from query parameters, default to 1 if not provided.
+        const page = parseInt(req.query.page) || 1;
+        //Hardcoded limit for pagination. Will be used to set the number of IPs per page. Keeping it to 10 for now.
+        const limit = 10; 
+        //Paginate the sorted IPs using a util helper function
+        const paginatedIPs = paginate(sortedIPs, page, limit);
+        // Return the paginated and sorted IPs along with total count, current page, and limit
+        res.json({
+            total: sortedIPs.length,
+            page: page,
+            limit: limit,
+            ips: paginatedIPs
+        });
     } catch (error) {
         console.error('Error fetching blocked IPs. 500 error sent from routes.blockedIPs.js get method', error);
         res.status(500).json({ message: 'Server error' });
@@ -54,14 +72,12 @@ router.delete('/:id', auth, async (req, res) =>{
             console.error('Protected site not found for user. Sent from routes/blockedIP.js delete method');
             return res.status(404).json({ message: 'Protected site not found' });
         }
-        const deletedIP = await BlockedIP.findOneAndDelete({
-            _id: req.params.id,
-            protectedSite: protectedSite._id
-        });
+        const deletedIP = await BlockedIP.findByIdAndDelete(req.params.id);
         if (!deletedIP) {
             console.error('Blocked IP not found. Sent from routes/blockedIP.js delete method');
             return res.status(404).json({ message: 'Blocked IP not found' });
         };
+        console.log('Blocked IP deleted successfully. Sent from routes/blockedIP.js delete method');
         res.json({ message: 'Blocked IP deleted successfully' });
     } catch (error) {
         console.error('Error deleting blocked IP. 500 error sent from routes/blockedIP.js delete method', error);

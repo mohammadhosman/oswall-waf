@@ -7,15 +7,18 @@ import "../../styling/common/App.css";
 import heroImage from "../../images/index/hero.jpg";
 
 function Index() {
+  const isLoggedIn = !!localStorage.getItem('token'); // or use your auth context
+
   return (
     <div id="app">
       <NavigationBar />
       <Hero 
-      title="OsWall Web Application Firewall"
-      subtitle="Made to protect your web app"
-      showButton={true}
-      buttonText="Register"
-      backgroundImage={heroImage}
+        title="OsWall Web Application Firewall"
+        subtitle="Made to protect your web app"
+        showButton={true}
+        buttonText={isLoggedIn ? "Dashboard" : "Register"}
+        buttonLink={isLoggedIn ? "/dashboard" : "/register"} // If your Hero supports buttonLink
+        backgroundImage={heroImage}
       />
       <Footer />
     </div>

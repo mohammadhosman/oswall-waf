@@ -32,6 +32,10 @@ app.use('/proxy', proxyRoutes);
 const contactRoutes = require('./routes/contact');
 app.use('/api/contact', contactRoutes);
 
+// Visit logging route
+const visitRoutes = require('./routes/visit');
+app.use('/api/visit', visitRoutes);
+
 const PORT = process.env.PORT || 5000;
 
 app.get('/', (req, res) => {

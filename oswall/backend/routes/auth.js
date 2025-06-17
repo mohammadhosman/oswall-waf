@@ -13,7 +13,7 @@ router.post('/register', async (req, res) => {
         let user = await User.findOne({email});
         // Case where user with given email already exists. Return 400 error
         if (user) {
-            alert('User with given email already exists');
+           // alert('User with given email already exists');
             return res.status(400).json({message: 'User already exists'});
         }
         /*
@@ -37,7 +37,7 @@ router.post('/register', async (req, res) => {
         await newUser.save();
         res.status(201).json({message: 'User registered successfully'});
     } catch (error){
-        alert('Error registering user. 500 error');
+       // alert('Error registering user. 500 error');
         console.error('User registration error.', error);
         res.status(500).json({message: '500 Server error'});
     }

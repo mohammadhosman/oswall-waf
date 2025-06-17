@@ -1,7 +1,8 @@
 import React from "react";      
 import "../../styling/common/Hero.css";
+import { Link } from "react-router-dom"; 
 
-function Hero( {title, subtitle, showButton, description, buttonText, backgroundImage} ) {
+function Hero( {title, subtitle, showButton, description, buttonText, buttonLink, backgroundImage} ) {
     return (
         <header id="hero" style={{ backgroundImage: `url(${backgroundImage})` }}>
             <div id="hero-image" 
@@ -18,7 +19,13 @@ function Hero( {title, subtitle, showButton, description, buttonText, background
                         <h1 className="mb-3">{title}</h1>
                         {subtitle && <h4 className="mb-3">{subtitle}</h4>}
                         {description && <h6 className="mb-3">{description}</h6>}
-                        {showButton && <button id="register-button" className="btn btn-primary btn-lg">{buttonText}</button>}
+                        {showButton && buttonLink && (
+                            <Link to={buttonLink}>
+                                <button id="register-button" className="btn btn-primary btn-lg">
+                                    {buttonText}
+                                </button>
+                            </Link>
+                        )}
                     </div>
                 </div>
 
