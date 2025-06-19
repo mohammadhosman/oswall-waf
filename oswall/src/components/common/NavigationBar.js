@@ -37,33 +37,48 @@ function NavigationBar() {
                 <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
             </Nav>
             <Nav id="nav-bar-login-and-signup">
-                {/* Have to wrap <Button> element with a <Link> tag 
-                in order to send users to another page after clicking
-                on that button*/}
-                {!isLoggedIn && (
+                {!isLoggedIn ? (
                     <>
-                    <Link to={"/login"}>
-                    <Button variant="outline-info" id="nav-bar-login-button">Login</Button>
-                </Link>
-
-                {/* This is the sign up button that will take users to the register page */}
-                <Link to={"/register"}>
-                    <Button variant="info" id="nav-bar-signup-button">Sign Up</Button>
-                </Link>
-                </>
-                )}
-
-                {isLoggedIn && (
+                    <Button
+        as={Link}
+        to="/login"
+        variant="info"
+        className="me-2"
+        id="nav-bar-login-button"
+      >
+        Login
+      </Button>
+      <Button
+        as={Link}
+        to="/register"
+        variant="primary"
+        id="nav-bar-signup-button"
+      >
+        Sign Up
+      </Button>
+                    </>
+                ) : (
                     <>
-                    <Link to={"/dashboard"}>
-                    <Button variant="info" id="nav-bar-dashboard-button">Dashboard</Button>
-                </Link>
-
-                
-                <Link to={"/logout"}>
-                    <Button variant="outline-info" id="nav-bar-logout-button">Logout</Button>
-                </Link>
-                </>
+                    <Button
+        as={Link}
+        to="/dashboard"
+        variant="info"
+        className="me-2"
+        id="nav-bar-dashboard-button"
+      >
+        Dashboard
+      </Button>
+      <Button
+        variant="danger"
+        id="nav-bar-logout-button"
+        onClick={() => {
+          localStorage.removeItem('token');
+          window.location.href = "/login";
+        }}
+      >
+        Logout
+      </Button>
+                    </>
                 )}
             </Nav>
         </NavBar>

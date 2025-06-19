@@ -1,16 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Card, ListGroup, Spinner, Alert } from 'react-bootstrap';
 import '../../styling/common/App.css';
 
 function UserProfile() {
     const [profile, setProfile] = useState(null);
-    const [error, setError] = useState(null); 
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchProfile = async () => {
             const token = localStorage.getItem('token');
             const data = {
-                headers: {Authorization: `Bearer ${token}`}
+                headers: { Authorization: `Bearer ${token}` }
             }
             try {
                 const response = await axios.get('http://localhost:5000/api/auth/profile', data);
@@ -24,22 +25,31 @@ function UserProfile() {
     }, []);
 
     if (error) {
-        return <div className='user-profile mt-3' style={{color: 'red'}}>{error}</div>
+        return <Alert variant="danger" className="mt-3">{error}</Alert>;
     }
 
     if (!profile) {
-        return <div className='user-profile mt-3'>Loading profile...</div>;
+        return (
+            <div className="d-flex justify-content-center align-items-center mt-5">
+                <Spinner animation="border" variant="primary" />
+                <span className="ms-2">Loading profile...</span>
+            </div>
+        );
     }
 
     return (
-        <div className='user-profile mt-3'>
-            <h2>User profile</h2>
-            <p><strong>Name: </strong>{profile.name}</p>
-            <p><strong>Email: </strong>{profile.email}</p>
-            <p><strong>Address: </strong>{profile.address}</p>
-            <p><strong>City: </strong>{profile.city}</p>
-            <p><strong>Country: </strong>{profile.country}</p>
-        </div>
+        <Card className="shadow-sm mt-4 mx-auto" style={{ maxWidth: 400 }}>
+            <Card.Body>
+                <Card.Title className="mb-3 text-center">User Profile</Card.Title>
+                <ListGroup variant="flush">
+                    <ListGroup.Item><strong>Name:</strong> {profile.name}</ListGroup.Item>
+                    <ListGroup.Item><strong>Email:</strong> {profile.email}</ListGroup.Item>
+                    <ListGroup.Item><strong>Address:</strong> {profile.address}</ListGroup.Item>
+                    <ListGroup.Item><strong>City:</strong> {profile.city}</ListGroup.Item>
+                    <ListGroup.Item><strong>Country:</strong> {profile.country}</ListGroup.Item>
+                </ListGroup>
+            </Card.Body>
+        </Card>
     );
 }
 
