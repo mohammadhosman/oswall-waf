@@ -15,7 +15,8 @@ function Dashboard() {
 
     React.useEffect(() => {
         const token = localStorage.getItem('token');
-        fetch('/api/sites', {
+        const backendUrl = process.env.REACT_APP_BACKEND_URL;
+        fetch(`${backendUrl}/api/sites`, {
             headers: token ? { 'Authorization': `Bearer ${token}` } : {},
             credentials: 'include',
         })

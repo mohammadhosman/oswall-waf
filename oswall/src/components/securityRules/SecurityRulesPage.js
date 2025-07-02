@@ -22,7 +22,8 @@ function SecurityRulesPage() {
             setLoading(true);
             try {
                 const token = localStorage.getItem('token');
-                const res = await axios.get('/api/security-rules', {
+                const backendUrl = process.env.REACT_APP_BACKEND_URL;
+                const res = await axios.get(`${backendUrl}/api/security-rules`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 // Map _id to id for all rules
@@ -55,7 +56,8 @@ function SecurityRulesPage() {
     const handleDeleteClick = async (ruleId) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`/api/security-rules/${ruleId}`, {
+            const backendUrl = process.env.REACT_APP_BACKEND_URL;
+            await axios.delete(`${backendUrl}/api/security-rules/${ruleId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setRules(rules.filter(r => r.id !== ruleId));
@@ -69,9 +71,10 @@ function SecurityRulesPage() {
     // Function to handle saving the rule from the modal
     const handleModalSave = async (rule) => {
         const token = localStorage.getItem('token');
+        const backendUrl = process.env.REACT_APP_BACKEND_URL;
         if (modalMode === 'add') {
             try {
-                const res = await axios.post('/api/security-rules', rule, {
+                const res = await axios.post(`${backendUrl}/api/security-rules`, rule, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 const newRule = { ...res.data, id: res.data.id || res.data._id };
@@ -84,7 +87,7 @@ function SecurityRulesPage() {
             }
         } else {
             try {
-                const res = await axios.put(`/api/security-rules/${rule.id}`, rule, {
+                const res = await axios.put(`${backendUrl}/api/security-rules/${rule.id}`, rule, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 const updatedRule = { ...res.data, id: res.data.id || res.data._id };

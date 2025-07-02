@@ -10,7 +10,8 @@ function DeleteProtectedSiteButton({ onDeleted, setError }) {
             const config ={
                 headers: { Authorization: `Bearer ${token}`}
             };
-            await axios.delete('http://localhost:5000/api/sites', config);
+            const backendUrl = process.env.REACT_APP_BACKEND_URL;
+            await axios.delete(`${backendUrl}/api/sites`, config);
             if (onDeleted){
                 onDeleted();
             }

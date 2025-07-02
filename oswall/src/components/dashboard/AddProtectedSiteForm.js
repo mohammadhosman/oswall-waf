@@ -22,7 +22,8 @@ function AddProtectedSiteForm({ onSiteAdded }) {
             headers: { Authorization: `Bearer ${token}` }
         };
         try {
-            await axios.post('http://localhost:5000/api/sites', data, config);
+            const backendUrl = process.env.REACT_APP_BACKEND_URL;
+            await axios.post(`${backendUrl}/api/sites`, data, config);
             setSuccess('Protected site added successfully!');
             setUrl('');
             setSiteName('');

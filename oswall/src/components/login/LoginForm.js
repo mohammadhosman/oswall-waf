@@ -16,8 +16,9 @@ function LoginForm() {
       password: password
     }
     try {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
     // Send the form data to the backend API using axios
-    const response = await axios.post('http://localhost:5000/api/auth/login', formData);
+    const response = await axios.post(`${backendUrl}/api/auth/login`, formData);
     // Let user know that the login was successful
     console.log('Login successfully sent from LoginForm component', response.data);
     localStorage.setItem('token', response.data.token);

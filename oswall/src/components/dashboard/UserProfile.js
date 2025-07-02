@@ -14,7 +14,8 @@ function UserProfile() {
                 headers: { Authorization: `Bearer ${token}` }
             }
             try {
-                const response = await axios.get('http://localhost:5000/api/auth/profile', data);
+                const backendUrl = process.env.REACT_APP_BACKEND_URL;
+                const response = await axios.get(`${backendUrl}/api/auth/profile`, data);
                 setProfile(response.data);
             } catch (error) {
                 console.error('Error fetching profile: ', error);

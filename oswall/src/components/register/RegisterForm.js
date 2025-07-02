@@ -131,7 +131,8 @@ function RegisterForm() {
     }
     // Send the form data to the backend API
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', formData);
+      const backendUrl = process.env.REACT_APP_BACKEND_URL;
+      const response = await axios.post(`${backendUrl}/api/auth/register`, formData);
       if (response.status === 201) {
         setSuccess('Registration successful. Redirecting...');
             // localStorage.setItem('token', res.data.token);

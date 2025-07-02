@@ -23,7 +23,8 @@ function BlockedIPsPage() {
             const config = {
                 headers: {Authorization: `Bearer ${token}`}
             };
-            const response = await axios.get(`http://localhost:5000/api/blocked-ips?page=${page}&limit=10`, config);
+            const backendUrl = process.env.REACT_APP_BACKEND_URL;
+            const response = await axios.get(`${backendUrl}/api/blocked-ips?page=${page}&limit=10`, config);
             setIps(response.data.ips);
             setTotal(response.data.total);
         } catch (error) {
@@ -45,7 +46,8 @@ function BlockedIPsPage() {
             const config = {
                 headers: { Authorization: `Bearer ${token}`}
             };
-            await axios.post('http://localhost:5000/api/blocked-ips', { ip }, config);
+            const backendUrl = process.env.REACT_APP_BACKEND_URL;
+            await axios.post(`${backendUrl}/api/blocked-ips`, { ip }, config);
             fetchIPs(); // Refresh the list after adding
         } catch (error) {
             console.error('Error adding blocked IP: ', error);
@@ -63,7 +65,8 @@ function BlockedIPsPage() {
             const config = {
                 headers: {Authorization: `Bearer ${token}`}
             }
-            await axios.delete(`http://localhost:5000/api/blocked-ips/${id}`, config);
+            const backendUrl = process.env.REACT_APP_BACKEND_URL;
+            await axios.delete(`${backendUrl}/api/blocked-ips/${id}`, config);
             fetchIPs();
         } catch (error) {
             console.error('error deleting blocked IP. sent from BlockedIPsPage.js component: ', error);

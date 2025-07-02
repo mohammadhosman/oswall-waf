@@ -17,7 +17,8 @@ function ProtectedSite() {
                 headers: { Authorization: `Bearer ${token}` }
             }
             try {
-                const response = await axios.get('http://localhost:5000/api/sites', config)
+                const backendUrl = process.env.REACT_APP_BACKEND_URL;
+                const response = await axios.get(`${backendUrl}/api/sites`, config)
                 setSite(response.data);
             } catch (error) {
                 if (error.response && error.response.status === 404) {
