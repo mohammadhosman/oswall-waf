@@ -2,7 +2,7 @@ import React, {useEffect, useState } from "react";
 import ReactDOM from 'react-dom/client';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styling/common/NavigationBar.css";
-import NavBar from "react-bootstrap/NavBar";
+import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
 import {Link} from "react-router-dom";
@@ -22,15 +22,15 @@ function NavigationBar() {
     }, []);
 
     return (
-        <NavBar expand="lg" bg="dark" data-bs-theme="dark" id="nav-bar">
-            <NavBar.Brand as={Link} to="/" id="nav-bar-brand">
+        <Navbar expand="lg" bg="dark" data-bs-theme="dark" id="nav-bar">
+            <Navbar.Brand as={Link} to="/" id="nav-bar-brand">
                 <img alt="oswall logo" 
                 src={require("../../images/common/oswall-logo-large-no-bg.png")} 
                 width="50px" 
                 height="50px" 
                 className="d-inline-block align-top"
                 />
-            </NavBar.Brand>
+            </Navbar.Brand>
             <Nav id="nav-bar-links" className="me-auto">
                 <Nav.Link as={Link} to="/">Home</Nav.Link>
                 <Nav.Link as={Link} to="/about">About</Nav.Link>
@@ -81,7 +81,7 @@ function NavigationBar() {
                     </>
                 )}
             </Nav>
-        </NavBar>
+        </Navbar>
     )
 }
 
