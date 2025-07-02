@@ -2,6 +2,7 @@
   "name": "oswall",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@testing-library/react": "^16.2.0",
     "axios": "^1.9.0",

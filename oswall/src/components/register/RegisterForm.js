@@ -7,10 +7,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Alert from 'react-bootstrap/Alert';
 import { useNavigate } from 'react-router-dom'; 
+import './RegisterForm.css';
 
 function RegisterForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [address, setAddress] = useState('');
   const [address2, setAddress2] = useState(''); // I'm thinking of getting rid of the second address field
   const [name, setName] = useState('');
@@ -18,12 +20,106 @@ function RegisterForm() {
   const [country, setCountry] = useState('');
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [confirmPasswordTouched, setConfirmPasswordTouched] = useState(false);
   const navigate = useNavigate();
+
+  // Add a timer ref to clear timeout on unmount or new error
+  const timerRef = React.useRef();
+
+  const validateEmail = (value) => {
+    // Simple email regex
+    const re = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(".+"))@(([^<>()[\]\\.,;:\s@\"]+\.)+[^<>()[\]\\.,;:\s@\"]{2,})$/i;
+    return re.test(String(value).toLowerCase());
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    if (e.target.value === "") {
+      setEmailError("");
+      return;
+    }
+    if (emailTouched) {
+      if (!validateEmail(e.target.value)) {
+        setEmailError("Please enter a valid email address.");
+      } else {
+        setEmailError("");
+      }
+    } else {
+      setEmailError("");
+    }
+  };
+
+  const handleEmailBlur = () => {
+    setEmailTouched(true);
+    if (!validateEmail(email)) {
+      setEmailError("Please enter a valid email address.");
+    } else {
+      setEmailError("");
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    // If confirmPassword is empty, clear error
+    if (confirmPassword === "") {
+      setPasswordError("");
+      return;
+    }
+    if (e.target.value !== confirmPassword) {
+      setPasswordError("Passwords do not match. Please try again.");
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => setPasswordError(""), 3000);
+    } else {
+      setPasswordError("");
+      if (timerRef.current) clearTimeout(timerRef.current);
+    }
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+    if (e.target.value === "") {
+      setPasswordError("");
+      if (timerRef.current) clearTimeout(timerRef.current);
+      return;
+    }
+    if (password !== e.target.value) {
+      setPasswordError("Passwords do not match. Please try again.");
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => setPasswordError(""), 3000);
+    } else {
+      setPasswordError("");
+      if (timerRef.current) clearTimeout(timerRef.current);
+    }
+  };
+
+  const handleConfirmPasswordBlur = () => {
+    setConfirmPasswordTouched(true);
+    if (password !== confirmPassword) {
+      setPasswordError("Passwords do not match.");
+    } else {
+      setPasswordError("");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); // Reset error state
-    setSuccess(false); // Reset success state
+    if (confirmPassword === "") {
+      setPasswordError("");
+      if (timerRef.current) clearTimeout(timerRef.current);
+      return;
+    }
+    if (password !== confirmPassword) {
+      setPasswordError("Passwords do not match. Please try again.");
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => setPasswordError(""), 3000);
+      return;
+    } else {
+      setPasswordError("");
+      if (timerRef.current) clearTimeout(timerRef.current);
+    }
     // Here is where I handle the form submission
     const formData = {
       email: email,
@@ -60,28 +156,41 @@ function RegisterForm() {
       <Row className="mb-3">
 
         {/* This is for the user's email */}
-        <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label>Email</Form.Label>
-          <Form.Control 
-            type="email" 
-            placeholder="Enter email" 
-            className='w-75'
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Label>Email address</Form.Label>
+      <Form.Control
+        type="email"
+        placeholder="Enter email"
+        value={email}
+        onChange={handleEmailChange}
+        onBlur={handleEmailBlur}
+        isInvalid={!!emailError && emailTouched}
+      />
+      {emailError && emailTouched && <Form.Control.Feedback type="invalid">{emailError}</Form.Control.Feedback>}
+    </Form.Group>
 
         {/* This is for the user's password */}
         <Form.Group as={Col} controlId="formGridPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control 
-            type="password" 
-            placeholder="Password" 
-            className='w-75'
+          <Form.Control
+            type="password"
+            placeholder="Password"
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
         </Form.Group>
+        <Form.Group className="mb-3" controlId="formGridConfirmPassword">
+        <Form.Label>Confirm Password</Form.Label>
+        <Form.Control
+          type="password"
+          placeholder="Re-enter your password"
+          value={confirmPassword}
+          onChange={e => setConfirmPassword(e.target.value)}
+        />
+      </Form.Group>
+      {passwordError && (
+        <div className={`register-error-message${passwordError ? ' show' : ''}`}>{passwordError}</div>
+      )}
       </Row>
 
         {/* This is for the user's name */}

@@ -1,0 +1,25 @@
+/* About page custom styles */
+
+#about-hero {
+  position: relative;
+  width: 100vw;
+  height: 60vh;
+  overflow: hidden;
+}
+
+#about-hero .display-4 {
+  font-weight: bold;
+}
+
+#about-hero h4 {
+  font-weight: 400;
+}
+
+#about-hero video {
+  filter: brightness(0.7);
+}
+
+#about-hero img {
+  max-width: 100px;
+  margin-bottom: 1rem;
+}

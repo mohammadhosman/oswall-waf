@@ -36,6 +36,10 @@ app.use('/api/contact', contactRoutes);
 const visitRoutes = require('./routes/visit');
 app.use('/api/visit', visitRoutes);
 
+// Security rules routes
+const securityRulesRouter = require('./routes/securityRules');
+app.use('/api/security-rules', securityRulesRouter);
+
 const PORT = process.env.PORT || 5000;
 
 app.get('/', (req, res) => {

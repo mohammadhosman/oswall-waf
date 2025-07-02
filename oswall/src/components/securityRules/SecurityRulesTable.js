@@ -20,7 +20,7 @@ function SecurityRulesTable({rules = [], onEdit, onDelete}) {
                     rules.map(rule => (
                         <tr key={rule.id}>
                             <td>{rule.limit} requests</td>
-                            <td>per {rule.window} {rule.windowUnit}{rule.window >1 ? 's' : ''}</td>
+                            <td>per {rule.windowUnit}{rule.windowUnit !== 'second' && rule.windowUnit !== 'minute' && rule.windowUnit !== 'hour' && rule.windowUnit !== 'day' ? 's' : ''}</td>
                             <td>
                                 <Button variant='outline-primary' size='sm' className='me-2' onClick={() => onEdit(rule)}>
                                     Edit

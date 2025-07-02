@@ -7,12 +7,7 @@ const isIPBlocked = require('../utils/isIPBlocked');
 const Notification = require('../models/Notification'); // Assuming you have a Notification model
 const User = require('../models/User'); // Assuming you have a User model
 const sendEmail = require('../utils/sendEmail'); // Assuming you have a utility function to send emails
-
-// RATE_LIMIT and WINDOW_MINUTES are used to limit the number of requests from an IP address
-// to a protected site within a specified time window.
-// I will use these hardcoded values for now
-const RATE_LIMIT = 10; // requests
-const WINDOW_MINUTES = 60; // time window in minutes
+const SecurityRule = require('../models/SecurityRule'); // Add this import
 
 router.post('/', async (req, res) => {
     const { siteId } = req.body;
@@ -21,12 +16,10 @@ router.post('/', async (req, res) => {
     try {
         const protectedSite = await ProtectedSite.findById(siteId);
         if (!protectedSite) {
-            console.error('Protected site not found for ID. Sent from routes/visit POST method: ', siteId);
             return res.status(404).json({ message: 'Site not found' });
         }
 
         if (await isIPBlocked(protectedSite._id, ip)) {
-            console.error('IP blocked for site. 403 error sent from routes/visit POST method: ', ip);
             return res.status(403).json({ message: 'IP blocked' });
         }
 
@@ -35,47 +28,43 @@ router.post('/', async (req, res) => {
             ip: ip
         });
 
-        // Rate-limit detection
-        const windowStart = new Date(Date.now() - WINDOW_MINUTES * 60 * 1000);
-        const recentCount = await RequestLog.countDocuments({
-            protectedSite: protectedSite._id,
-            ip: ip,
-            timestamp: { $gte: windowStart }
-        });
-
-        if (recentCount > RATE_LIMIT) {
-            // Check for existing unread notification
-            const existing = await Notification.findOne({
+        // Get all custom security rules for this user/site
+        const rules = await SecurityRule.find({ userId: protectedSite.user });
+        if (!rules.length) {
+            // No custom rule set, allow all requests
+            return res.status(200).json({ message: 'Visit logged (no security rule set)' });
+        }
+        // Check all rules
+        const unitToMs = { second: 1000, minute: 60000, hour: 3600000, day: 86400000 };
+        for (const rule of rules) {
+            const windowMs = unitToMs[rule.windowUnit];
+            const limit = rule.limit;
+            if (!windowMs || !limit) continue; // skip invalid rules
+            const windowStart = new Date(Date.now() - windowMs);
+            const recentCount = await RequestLog.countDocuments({
                 protectedSite: protectedSite._id,
                 ip: ip,
-                read: false,
-                message: { $regex: 'rate limit', $options: 'i' }
+                timestamp: { $gte: windowStart }
             });
-            if (!existing) {
-                await Notification.create({
-                    protectedSite: protectedSite._id,
-                    ip: ip,
-                    message: `Rate limit exceeded: ${recentCount} requests in the last ${WINDOW_MINUTES} minutes.`,
-                });
-
-                const user = await User.findById(protectedSite.user);
-                if (user && user.email) {
-                    console.log('About to send email from routes/visit.js');
-                    await sendEmail(
-                        user.email,
-                        'OsWall Alert: Rate Limit Exceeded',
-                        `IP ${ip} has made ${recentCount} requests to your site "${protectedSite.domain}" in the last ${WINDOW_MINUTES} minutes.`
-                    );
-                    console.log('Email sent successfully from routes/visit.js');
+            if (recentCount >= limit) {
+                // Send email notification to the user
+                try {
+                    const user = await User.findById(protectedSite.user);
+                    if (user && user.email) {
+                        await sendEmail(
+                            user.email,
+                            'OsWall Alert: Rate Limit Exceeded',
+                            `IP ${ip} has exceeded the custom security rule (${limit} requests per ${rule.windowUnit}) for your site "${protectedSite.siteName}".`
+                        );
+                    }
+                } catch (emailErr) {
+                    console.error('Failed to send rate limit email notification:', emailErr);
                 }
+                return res.status(429).json({ message: 'Rate limit exceeded' });
             }
-            console.warn(`Rate limit exceeded for IP ${ip} on site ${protectedSite._id}`);
         }
-
-        console.log('Visitor IP:', ip, 'req.ip:', req.ip, 'x-forwarded-for:', req.headers['x-forwarded-for']);
         res.status(200).json({ message: 'Visit logged' });
     } catch (err) {
-        console.error('Error logging visit:', err);
         res.status(500).json({ message: 'Server error' });
     }
 });

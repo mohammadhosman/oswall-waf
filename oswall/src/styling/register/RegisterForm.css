@@ -1,3 +1,26 @@
 #register-form {
     padding-bottom: 40px;
 }
+
+.register-error-message {
+  color: #d32f2f;
+  background: none;
+  font-weight: normal;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 18px;
+  text-align: center;
+  font-size: 1.1rem;
+  box-shadow: none;
+  opacity: 1;
+  transition: opacity 0.8s ease-in;
+}
+
+.register-error-message:not(.show) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.register-error-message.show {
+  opacity: 1;
+}
