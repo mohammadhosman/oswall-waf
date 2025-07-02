@@ -20,7 +20,8 @@ function Login() {
     setError("");
     setLoading(true);
     try {
-      const response = await axios.post("/api/auth/login", { email, password });
+      const backendUrl = process.env.REACT_APP_BACKEND_URL;
+      const response = await axios.post(`${backendUrl}/api/auth/login`, { email, password });
       localStorage.setItem("token", response.data.token);
       setLoading(false);
       navigate("/dashboard");
